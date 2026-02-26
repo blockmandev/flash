@@ -203,6 +203,7 @@ deployment, eliminating the need for code changes.
 
 <div align="center">
 
+<img width="1278" height="754" alt="burn-train-tui" src="https://github.com/user-attachments/assets/954b8ff8-36a1-4c9a-a817-9e11cb954e98" />
 
 **Click on the following sections to expand 👇**
 
