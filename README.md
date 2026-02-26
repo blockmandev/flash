@@ -17,9 +17,6 @@ in static-graph frameworks, offering optimal speed without impacting flexibility
 
 ## Backend
 
-<div align="left">
-<img width="2620" height="2496" alt="backend-chip" src="https://github.com/user-attachments/assets/697a4e7f-8d2a-440f-9018-6b8ac5d2fff0" />
-
 
 Flash strives to be as fast as possible on as many hardwares as possible, with robust
 implementations. We believe this flexibility is crucial for modern needs where you may train your
@@ -193,10 +190,6 @@ fn main_client() {
 
 ## Training & Inference
 
-<div align="left">
-
-<img width="3502" height="3318" alt="ember-wall" src="https://github.com/user-attachments/assets/fabd36a4-2761-4104-9f1e-bcedff8bbc02" />
-
 
 The whole deep learning workflow is made easy with Flash, as you can monitor your training progress
 with an ergonomic dashboard, and run inference everywhere from embedded devices to large GPU
@@ -260,10 +253,6 @@ Inference in the Browser 🌐
 > to deeply nested associated types and trait bounds.
 
 ## Getting Started
-
-<div align="left">
-
-<img width="1660" height="2364" alt="ember-walking" src="https://github.com/user-attachments/assets/f3892e55-b56a-49d0-b899-21e6220115e7" />
 
 Just heard of Flash? You are at the right place! Just continue reading this section and we hope you
 can get on board really quickly.
