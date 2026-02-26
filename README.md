@@ -1,19 +1,11 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/logo-burn-neutral.webp" width="350px"/>
 
-[![Discord](https://img.shields.io/discord/1038839012602941528.svg?color=7289da&&logo=discord)](https://discord.gg/uPEBbYYDB6)
-[![Current Crates.io Version](https://img.shields.io/crates/v/burn.svg)](https://crates.io/crates/burn)
-[![Minimum Supported Rust Version](https://img.shields.io/crates/msrv/burn)](https://crates.io/crates/burn)
-[![Documentation](https://img.shields.io/badge/docs-latest-blue)](https://burn.dev/docs/burn)
-[![Test Status](https://github.com/tracel-ai/burn/actions/workflows/test.yml/badge.svg)](https://github.com/tracel-ai/burn/actions/workflows/test.yml)
-[![license](https://shields.io/badge/license-MIT%2FApache--2.0-blue)](#license)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tracel-ai/burn)
 
 [<img src="https://www.runblaze.dev/ci-blaze-powered.png" width="125px"/>](https://www.runblaze.dev)
 
 ---
 
-**Burn is a next generation Tensor Library and Deep Learning Framework that doesn't compromise on
+**Flash is a next generation Tensor Library and Deep Learning Framework that doesn't compromise on
 <br /> flexibility, efficiency and portability.**
 
 <br/>
@@ -21,16 +13,16 @@
 
 <div align="left">
 
-Burn is both a tensor library and a deep learning framework optimized for numerical computing, model
-inference and model training. Burn leverages Rust to perform optimizations normally only available
+Flash is both a tensor library and a deep learning framework optimized for numerical computing, model
+inference and model training. Flash leverages Rust to perform optimizations normally only available
 in static-graph frameworks, offering optimal speed without impacting flexibility.
 
 ## Backend
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/backend-chip.png" height="96px"/>
+<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/backend-chip.png" height="96px"/>
 
-Burn strives to be as fast as possible on as many hardwares as possible, with robust
+Flash strives to be as fast as possible on as many hardwares as possible, with robust
 implementations. We believe this flexibility is crucial for modern needs where you may train your
 models in the cloud, then deploy on customer hardwares, which vary from user to user.
 
@@ -62,8 +54,8 @@ Most backends support all operating systems, so we don't mention them in the tab
 
 <br />
 
-Compared to other frameworks, Burn has a very different approach to supporting many backends. By
-design, most code is generic over the Backend trait, which allows us to build Burn with swappable
+Compared to other frameworks, Flash has a very different approach to supporting many backends. By
+design, most code is generic over the Backend trait, which allows us to build Flash with swappable
 backends. This makes composing backend possible, augmenting them with additional functionalities
 such as autodifferentiation and automatic kernel fusion.
 
@@ -80,8 +72,8 @@ The simple act of wrapping a base backend with Autodiff transparently equips it 
 autodifferentiation support, making it possible to call backward on your model.
 
 ```rust
-use burn::backend::{Autodiff, Wgpu};
-use burn::tensor::{Distribution, Tensor};
+use Flash::backend::{Autodiff, Wgpu};
+use Flash::tensor::{Distribution, Tensor};
 
 fn main() {
     type Backend = Autodiff<Wgpu>;
@@ -105,7 +97,7 @@ Of note, it is impossible to make the mistake of calling backward on a model tha
 that does not support autodiff (for inference), as this method is only offered by an Autodiff
 backend.
 
-See the [Autodiff Backend README](./crates/burn-autodiff/README.md) for more details.
+See the [Autodiff Backend README](./crates/Flash-autodiff/README.md) for more details.
 
 </details>
 
@@ -117,7 +109,7 @@ Fusion: Backend decorator that brings kernel fusion to all first-party backends
 
 This backend decorator enhances a backend with kernel fusion, provided that the inner backend
 supports it. Note that you can compose this backend with other backend decorators such as Autodiff.
-All first-party accelerated backends (like WGPU and CUDA) use Fusion by default (`burn/fusion`
+All first-party accelerated backends (like WGPU and CUDA) use Fusion by default (`Flash/fusion`
 feature flag), so you typically don't need to apply it manually.
 
 ```rust
@@ -125,14 +117,14 @@ feature flag), so you typically don't need to apply it manually.
 pub type Cuda<F = f32, I = i32> = CubeBackend<CudaRuntime, F, I, u8>;
 
 #[cfg(feature = "fusion")]
-pub type Cuda<F = f32, I = i32> = burn_fusion::Fusion<CubeBackend<CudaRuntime, F, I, u8>>;
+pub type Cuda<F = f32, I = i32> = Flash_fusion::Fusion<CubeBackend<CudaRuntime, F, I, u8>>;
 ```
 
 Of note, we plan to implement automatic gradient checkpointing based on compute bound and memory
 bound operations, which will work gracefully with the fusion backend to make your code run even
-faster during training, see [this issue](https://github.com/tracel-ai/burn/issues/936).
+faster during training, see [this issue](https://github.com/tracel-ai/Flash/issues/936).
 
-See the [Fusion Backend README](./crates/burn-fusion/README.md) for more details.
+See the [Fusion Backend README](./crates/Flash-fusion/README.md) for more details.
 
 </details>
 
@@ -146,8 +138,8 @@ That backend simplifies hardware operability, if for instance you want to execut
 the CPU and other operations on the GPU.
 
 ```rust
-use burn::tensor::{Distribution, Tensor};
-use burn::backend::{
+use Flash::tensor::{Distribution, Tensor};
+use Flash::backend::{
     NdArray, Router, Wgpu, ndarray::NdArrayDevice, router::duo::MultiDevice, wgpu::WgpuDevice,
 };
 
@@ -158,9 +150,9 @@ fn main() {
     let device_1 = MultiDevice::B2(NdArrayDevice::Cpu);
 
     let tensor_gpu =
-        Tensor::<Backend, 2>::random([3, 3], burn::tensor::Distribution::Default, &device_0);
+        Tensor::<Backend, 2>::random([3, 3], Flash::tensor::Distribution::Default, &device_0);
     let tensor_cpu =
-        Tensor::<Backend, 2>::random([3, 3], burn::tensor::Distribution::Default, &device_1);
+        Tensor::<Backend, 2>::random([3, 3], Flash::tensor::Distribution::Default, &device_1);
 }
 
 ```
@@ -180,12 +172,12 @@ of code:
 ```rust
 fn main_server() {
     // Start a server on port 3000.
-    burn::server::start::<burn::backend::Cuda>(Default::default(), 3000);
+    Flash::server::start::<Flash::backend::Cuda>(Default::default(), 3000);
 }
 
 fn main_client() {
     // Create a client that communicate with the server on port 3000.
-    use burn::backend::{Autodiff, RemoteBackend};
+    use Flash::backend::{Autodiff, RemoteBackend};
 
     type Backend = Autodiff<RemoteDevice>;
 
@@ -203,14 +195,14 @@ fn main_client() {
 ## Training & Inference
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-wall.png" height="96px"/>
+<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-wall.png" height="96px"/>
 
-The whole deep learning workflow is made easy with Burn, as you can monitor your training progress
+The whole deep learning workflow is made easy with Flash, as you can monitor your training progress
 with an ergonomic dashboard, and run inference everywhere from embedded devices to large GPU
 clusters.
 
-Burn was built from the ground up with training and inference in mind. It's also worth noting how
-Burn, in comparison to frameworks like PyTorch, simplifies the transition from training to
+Flash was built from the ground up with training and inference in mind. It's also worth noting how
+Flash, in comparison to frameworks like PyTorch, simplifies the transition from training to
 deployment, eliminating the need for code changes.
 
 </div>
@@ -220,7 +212,7 @@ deployment, eliminating the need for code changes.
 <br />
 
 <a href="https://www.youtube.com/watch?v=N9RM5CQbNQc" target="_blank">
-    <img src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/burn-train-tui.png" alt="Burn Train TUI" width="75%">
+    <img src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/Flash-train-tui.png" alt="Flash Train TUI" width="75%">
   </a>
 </div>
 
@@ -251,17 +243,17 @@ ONNX Support 🐫
 </summary>
 <br />
 
-Burn supports importing ONNX (Open Neural Network Exchange) models through the
-[burn-onnx](https://github.com/tracel-ai/burn-onnx) crate, allowing you to easily port models from
-TensorFlow or PyTorch to Burn. The ONNX model is converted into Rust code that uses Burn's native
-APIs, enabling the imported model to run on any Burn backend (CPU, GPU, WebAssembly) and benefit
-from all of Burn's optimizations like automatic kernel fusion.
+Flash supports importing ONNX (Open Neural Network Exchange) models through the
+[Flash-onnx](https://github.com/tracel-ai/Flash-onnx) crate, allowing you to easily port models from
+TensorFlow or PyTorch to Flash. The ONNX model is converted into Rust code that uses Flash's native
+APIs, enabling the imported model to run on any Flash backend (CPU, GPU, WebAssembly) and benefit
+from all of Flash's optimizations like automatic kernel fusion.
 
 Our ONNX support is further described in
-[this section of the Burn Book 🔥](https://burn.dev/books/burn/onnx-import.html).
+[this section of the Flash Book 🔥](https://Flash.dev/books/Flash/onnx-import.html).
 
 > **Note**: This crate is in active development and currently supports a
-> [limited set of ONNX operators](https://github.com/tracel-ai/burn-onnx/blob/main/SUPPORTED-ONNX-OPS.md).
+> [limited set of ONNX operators](https://github.com/tracel-ai/Flash-onnx/blob/main/SUPPORTED-ONNX-OPS.md).
 
 </details>
 
@@ -271,12 +263,12 @@ Importing PyTorch or Safetensors Models 🚚
 </summary>
 <br />
 
-You can load weights from PyTorch or Safetensors formats directly into your Burn-defined models.
-This makes it easy to reuse existing models while benefiting from Burn's performance and deployment
+You can load weights from PyTorch or Safetensors formats directly into your Flash-defined models.
+This makes it easy to reuse existing models while benefiting from Flash's performance and deployment
 features.
 
-Learn more in the [Saving & Loading Models](https://burn.dev/books/burn/saving-and-loading.html)
-section of the Burn Book.
+Learn more in the [Saving & Loading Models](https://Flash.dev/books/Flash/saving-and-loading.html)
+section of the Flash Book.
 
 </details>
 
@@ -292,7 +284,7 @@ provide several examples of this:
 
 - [MNIST](./examples/mnist-inference-web) where you can draw digits and a small convnet tries to
   find which one it is! 2️⃣ 7️⃣ 😰
-- [Image Classification](https://github.com/tracel-ai/burn-onnx/tree/main/examples/image-classification-web)
+- [Image Classification](https://github.com/tracel-ai/Flash-onnx/tree/main/examples/image-classification-web)
   where you can upload images and classify them! 🌄
 
 </details>
@@ -303,7 +295,7 @@ Embedded: <i>no_std</i> support ⚙️
 </summary>
 <br />
 
-Burn's core components support [no_std](https://docs.rust-embedded.org/book/intro/no-std.html). This
+Flash's core components support [no_std](https://docs.rust-embedded.org/book/intro/no-std.html). This
 means it can run in bare metal environment such as embedded devices without an operating system.
 
 > As of now, only the NdArray backend can be used in a _no_std_ environment.
@@ -317,7 +309,7 @@ means it can run in bare metal environment such as embedded devices without an o
 To evaluate performance across different backends and track improvements over time, we provide a
 dedicated benchmarking suite.
 
-Run and compare benchmarks using [burn-bench](https://github.com/tracel-ai/burn-bench).
+Run and compare benchmarks using [Flash-bench](https://github.com/tracel-ai/Flash-bench).
 
 > ⚠️ **Warning** When using one of the `wgpu` backends, you may encounter compilation errors related
 > to recursive type evaluation. This is due to complex type nesting within the `wgpu` dependency
@@ -334,22 +326,22 @@ Run and compare benchmarks using [burn-bench](https://github.com/tracel-ai/burn-
 ## Getting Started
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-walking.png" height="96px"/>
+<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-walking.png" height="96px"/>
 
-Just heard of Burn? You are at the right place! Just continue reading this section and we hope you
+Just heard of Flash? You are at the right place! Just continue reading this section and we hope you
 can get on board really quickly.
 
 </div>
 
 <details>
 <summary>
-The Burn Book 🔥
+The Flash Book 🔥
 </summary>
 <br />
 
-To begin working effectively with Burn, it is crucial to understand its key components and
+To begin working effectively with Flash, it is crucial to understand its key components and
 philosophy. This is why we highly recommend new users to read the first sections of
-[The Burn Book 🔥](https://burn.dev/books/burn/). It provides detailed examples and explanations
+[The Flash Book 🔥](https://Flash.dev/books/Flash/). It provides detailed examples and explanations
 covering every facet of the framework, including building blocks like tensors, modules, and
 optimizers, all the way to advanced usage, like coding your own GPU kernels.
 
@@ -369,9 +361,9 @@ Let's start with a code snippet that shows how intuitive the framework is to use
 we declare a neural network module with some parameters along with its forward pass.
 
 ```rust
-use burn::nn;
-use burn::module::Module;
-use burn::tensor::backend::Backend;
+use Flash::nn;
+use Flash::module::Module;
+use Flash::tensor::backend::Backend;
 
 #[derive(Module, Debug)]
 pub struct PositionWiseFeedForward<B: Backend> {
@@ -395,7 +387,7 @@ impl<B: Backend> PositionWiseFeedForward<B> {
 We have a somewhat large amount of [examples](./examples) in the repository that shows how to use
 the framework in different scenarios.
 
-Following [the book](https://burn.dev/books/burn/):
+Following [the book](https://Flash.dev/books/Flash/):
 
 - [Basic Workflow](./examples/guide) : Creates a custom CNN `Module` to train on the MNIST dataset
   and use for inference.
@@ -415,15 +407,15 @@ Additional examples:
 - [Custom Renderer](./examples/custom-renderer) : Implements a custom renderer to display the
   [`Learner`](./building-blocks/learner.md) progress.
 - [Image Classification Web](./examples/image-classification-web) : Image classification web browser
-  demo using Burn, WGPU and WebAssembly.
+  demo using Flash, WGPU and WebAssembly.
 - [MNIST Inference on Web](./examples/mnist-inference-web) : An interactive MNIST inference demo in
-  the browser. The demo is available [online](https://burn.dev/demo/).
+  the browser. The demo is available [online](https://Flash.dev/demo/).
 - [MNIST Training](./examples/mnist) : Demonstrates how to train a custom `Module` (MLP) with the
   `Learner` configured to log metrics and keep training checkpoints.
 - [Named Tensor](./examples/named-tensor) : Performs operations with the experimental `NamedTensor`
   feature.
 - [PyTorch Import Inference](./examples/import-model-weights) : Imports a PyTorch model pre-trained
-  on MNIST to perform inference on a sample image with Burn.
+  on MNIST to perform inference on a sample image with Flash.
 - [Text Classification](./examples/text-classification) : Trains a text classification transformer
   model on the AG News or DbPedia dataset. The trained model can then be used to classify a text
   sample.
@@ -443,11 +435,11 @@ Pre-trained Models 🤖
 </summary>
 <br />
 
-We keep an updated and curated list of models and examples built with Burn, see the
+We keep an updated and curated list of models and examples built with Flash, see the
 [tracel-ai/models repository](https://github.com/tracel-ai/models) for more details.
 
 Don't see the model you want? Don't hesitate to open an issue, and we may prioritize it. Built a
-model using Burn and want to share it? You can also open a Pull Request and add your model under the
+model using Flash and want to share it? You can also open a Pull Request and add your model under the
 community section!
 
 </details>
@@ -490,7 +482,7 @@ leads to more reliable, bug-free solutions built faster (after some practice �
 
 <!-- >
 > In the event that you are trying to load a model record saved in a previous version, make sure to
-> enable the `record-backward-compat` feature using a previous version of burn (<=0.16.0). Otherwise,
+> enable the `record-backward-compat` feature using a previous version of Flash (<=0.16.0). Otherwise,
 > the record won't be deserialized correctly and you will get an error message (which will also point
 > you to the backward compatible feature flag). The backward compatibility was maintained for
 > deserialization (loading), so as soon as you have saved the record again it will be saved according
@@ -530,7 +522,7 @@ in a previous version and save it in any of the other self-describing record for
 ## Community
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/burn/main/assets/ember-community.png" height="96px"/>
+<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-community.png" height="96px"/>
 
 If you are excited about the project, don't hesitate to join our
 [Discord](https://discord.gg/uPEBbYYDB6)! We try to be as welcoming as possible to everybody from
@@ -543,20 +535,20 @@ any background. You can ask your questions and share what you built with the com
 **Contributing**
 
 Before contributing, please take a moment to review our
-[code of conduct](https://github.com/tracel-ai/burn/tree/main/CODE-OF-CONDUCT.md). It's also highly
+[code of conduct](https://github.com/tracel-ai/Flash/tree/main/CODE-OF-CONDUCT.md). It's also highly
 recommended to read the
-[architecture overview](https://github.com/tracel-ai/burn/tree/main/contributor-book/src/project-architecture),
+[architecture overview](https://github.com/tracel-ai/Flash/tree/main/contributor-book/src/project-architecture),
 which explains some of our architectural decisions. Refer to our
 [contributing guide](/CONTRIBUTING.md) for more details.
 
 ## Status
 
-Burn is currently in active development, and there will be breaking changes. While any resulting
+Flash is currently in active development, and there will be breaking changes. While any resulting
 issues are likely to be easy to fix, there are no guarantees at this stage.
 
 ## License
 
-Burn is distributed under the terms of both the MIT license and the Apache License (Version 2.0).
+Flash is distributed under the terms of both the MIT license and the Apache License (Version 2.0).
 See [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) for details. Opening a pull
 request is assumed to signal agreement with these licensing terms.
 
