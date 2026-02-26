@@ -1,8 +1,6 @@
 <div align="center">
 
 
-[<img src="https://www.runblaze.dev/ci-blaze-powered.png" width="125px"/>](https://www.runblaze.dev)
-
 ---
 
 **Flash is a next generation Tensor Library and Deep Learning Framework that doesn't compromise on
@@ -20,7 +18,8 @@ in static-graph frameworks, offering optimal speed without impacting flexibility
 ## Backend
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/backend-chip.png" height="96px"/>
+<img width="2620" height="2496" alt="backend-chip" src="https://github.com/user-attachments/assets/697a4e7f-8d2a-440f-9018-6b8ac5d2fff0" />
+
 
 Flash strives to be as fast as possible on as many hardwares as possible, with robust
 implementations. We believe this flexibility is crucial for modern needs where you may train your
@@ -122,7 +121,7 @@ pub type Cuda<F = f32, I = i32> = Flash_fusion::Fusion<CubeBackend<CudaRuntime, 
 
 Of note, we plan to implement automatic gradient checkpointing based on compute bound and memory
 bound operations, which will work gracefully with the fusion backend to make your code run even
-faster during training, see [this issue](https://github.com/tracel-ai/Flash/issues/936).
+faster during training, see [this issue](https://github.com/blockcmandev/Flash/issues/936).
 
 See the [Fusion Backend README](./crates/Flash-fusion/README.md) for more details.
 
@@ -195,7 +194,9 @@ fn main_client() {
 ## Training & Inference
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-wall.png" height="96px"/>
+
+<img width="3502" height="3318" alt="ember-wall" src="https://github.com/user-attachments/assets/fabd36a4-2761-4104-9f1e-bcedff8bbc02" />
+
 
 The whole deep learning workflow is made easy with Flash, as you can monitor your training progress
 with an ergonomic dashboard, and run inference everywhere from embedded devices to large GPU
@@ -209,14 +210,6 @@ deployment, eliminating the need for code changes.
 
 <div align="center">
 
-<br />
-
-<a href="https://www.youtube.com/watch?v=N9RM5CQbNQc" target="_blank">
-    <img src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/Flash-train-tui.png" alt="Flash Train TUI" width="75%">
-  </a>
-</div>
-
-<br />
 
 **Click on the following sections to expand 👇**
 
@@ -239,26 +232,6 @@ important pieces of code to complete without interruption 🛡
 
 <details>
 <summary>
-ONNX Support 🐫
-</summary>
-<br />
-
-Flash supports importing ONNX (Open Neural Network Exchange) models through the
-[Flash-onnx](https://github.com/tracel-ai/Flash-onnx) crate, allowing you to easily port models from
-TensorFlow or PyTorch to Flash. The ONNX model is converted into Rust code that uses Flash's native
-APIs, enabling the imported model to run on any Flash backend (CPU, GPU, WebAssembly) and benefit
-from all of Flash's optimizations like automatic kernel fusion.
-
-Our ONNX support is further described in
-[this section of the Flash Book 🔥](https://Flash.dev/books/Flash/onnx-import.html).
-
-> **Note**: This crate is in active development and currently supports a
-> [limited set of ONNX operators](https://github.com/tracel-ai/Flash-onnx/blob/main/SUPPORTED-ONNX-OPS.md).
-
-</details>
-
-<details>
-<summary>
 Importing PyTorch or Safetensors Models 🚚
 </summary>
 <br />
@@ -266,10 +239,6 @@ Importing PyTorch or Safetensors Models 🚚
 You can load weights from PyTorch or Safetensors formats directly into your Flash-defined models.
 This makes it easy to reuse existing models while benefiting from Flash's performance and deployment
 features.
-
-Learn more in the [Saving & Loading Models](https://Flash.dev/books/Flash/saving-and-loading.html)
-section of the Flash Book.
-
 </details>
 
 <details>
@@ -277,39 +246,6 @@ section of the Flash Book.
 Inference in the Browser 🌐
 </summary>
 <br />
-
-Several of our backends can run in WebAssembly environments: NdArray for CPU execution, and WGPU for
-GPU acceleration via WebGPU. This means that you can run inference directly within a browser. We
-provide several examples of this:
-
-- [MNIST](./examples/mnist-inference-web) where you can draw digits and a small convnet tries to
-  find which one it is! 2️⃣ 7️⃣ 😰
-- [Image Classification](https://github.com/tracel-ai/Flash-onnx/tree/main/examples/image-classification-web)
-  where you can upload images and classify them! 🌄
-
-</details>
-
-<details>
-<summary>
-Embedded: <i>no_std</i> support ⚙️
-</summary>
-<br />
-
-Flash's core components support [no_std](https://docs.rust-embedded.org/book/intro/no-std.html). This
-means it can run in bare metal environment such as embedded devices without an operating system.
-
-> As of now, only the NdArray backend can be used in a _no_std_ environment.
-
-</details>
-
-<br />
-
-### Benchmarks
-
-To evaluate performance across different backends and track improvements over time, we provide a
-dedicated benchmarking suite.
-
-Run and compare benchmarks using [Flash-bench](https://github.com/tracel-ai/Flash-bench).
 
 > ⚠️ **Warning** When using one of the `wgpu` backends, you may encounter compilation errors related
 > to recursive type evaluation. This is due to complex type nesting within the `wgpu` dependency
@@ -326,7 +262,8 @@ Run and compare benchmarks using [Flash-bench](https://github.com/tracel-ai/Flas
 ## Getting Started
 
 <div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-walking.png" height="96px"/>
+
+<img width="1660" height="2364" alt="ember-walking" src="https://github.com/user-attachments/assets/f3892e55-b56a-49d0-b899-21e6220115e7" />
 
 Just heard of Flash? You are at the right place! Just continue reading this section and we hope you
 can get on board really quickly.
@@ -341,7 +278,7 @@ The Flash Book 🔥
 
 To begin working effectively with Flash, it is crucial to understand its key components and
 philosophy. This is why we highly recommend new users to read the first sections of
-[The Flash Book 🔥](https://Flash.dev/books/Flash/). It provides detailed examples and explanations
+The Flash Book 🔥. It provides detailed examples and explanations
 covering every facet of the framework, including building blocks like tensors, modules, and
 optimizers, all the way to advanced usage, like coding your own GPU kernels.
 
@@ -384,46 +321,6 @@ impl<B: Backend> PositionWiseFeedForward<B> {
 }
 ```
 
-We have a somewhat large amount of [examples](./examples) in the repository that shows how to use
-the framework in different scenarios.
-
-Following [the book](https://Flash.dev/books/Flash/):
-
-- [Basic Workflow](./examples/guide) : Creates a custom CNN `Module` to train on the MNIST dataset
-  and use for inference.
-- [Custom Training Loop](./examples/custom-training-loop) : Implements a basic training loop instead
-  of using the `Learner`.
-- [Custom WGPU Kernel](./examples/custom-wgpu-kernel) : Learn how to create your own custom
-  operation with the WGPU backend.
-
-Additional examples:
-
-- [Custom CSV Dataset](./examples/custom-csv-dataset) : Implements a dataset to parse CSV data for a
-  regression task.
-- [Regression](./examples/simple-regression) : Trains a simple MLP on the California Housing dataset
-  to predict the median house value for a district.
-- [Custom Image Dataset](./examples/custom-image-dataset) : Trains a simple CNN on custom image
-  dataset following a simple folder structure.
-- [Custom Renderer](./examples/custom-renderer) : Implements a custom renderer to display the
-  [`Learner`](./building-blocks/learner.md) progress.
-- [Image Classification Web](./examples/image-classification-web) : Image classification web browser
-  demo using Flash, WGPU and WebAssembly.
-- [MNIST Inference on Web](./examples/mnist-inference-web) : An interactive MNIST inference demo in
-  the browser. The demo is available [online](https://Flash.dev/demo/).
-- [MNIST Training](./examples/mnist) : Demonstrates how to train a custom `Module` (MLP) with the
-  `Learner` configured to log metrics and keep training checkpoints.
-- [Named Tensor](./examples/named-tensor) : Performs operations with the experimental `NamedTensor`
-  feature.
-- [PyTorch Import Inference](./examples/import-model-weights) : Imports a PyTorch model pre-trained
-  on MNIST to perform inference on a sample image with Flash.
-- [Text Classification](./examples/text-classification) : Trains a text classification transformer
-  model on the AG News or DbPedia dataset. The trained model can then be used to classify a text
-  sample.
-- [Text Generation](./examples/text-generation) : Trains a text generation transformer model on the
-  DbPedia dataset.
-- [Wasserstein GAN MNIST](./examples/wgan) : Trains a WGAN model to generate new handwritten digits
-  based on MNIST.
-
 For more practical insights, you can clone the repository and run any of them directly on your
 computer!
 
@@ -434,9 +331,6 @@ computer!
 Pre-trained Models 🤖
 </summary>
 <br />
-
-We keep an updated and curated list of models and examples built with Flash, see the
-[tracel-ai/models repository](https://github.com/tracel-ai/models) for more details.
 
 Don't see the model you want? Don't hesitate to open an issue, and we may prioritize it. Built a
 model using Flash and want to share it? You can also open a Pull Request and add your model under the
@@ -519,25 +413,12 @@ in a previous version and save it in any of the other self-describing record for
 
 </details>
 
-## Community
-
-<div align="left">
-<img align="right" src="https://raw.githubusercontent.com/tracel-ai/Flash/main/assets/ember-community.png" height="96px"/>
-
-If you are excited about the project, don't hesitate to join our
-[Discord](https://discord.gg/uPEBbYYDB6)! We try to be as welcoming as possible to everybody from
-any background. You can ask your questions and share what you built with the community!
-
-</div>
-
-<br/>
-
 **Contributing**
 
 Before contributing, please take a moment to review our
-[code of conduct](https://github.com/tracel-ai/Flash/tree/main/CODE-OF-CONDUCT.md). It's also highly
+[code of conduct](https://github.com/blockmandev/Flash/tree/main/CODE-OF-CONDUCT.md). It's also highly
 recommended to read the
-[architecture overview](https://github.com/tracel-ai/Flash/tree/main/contributor-book/src/project-architecture),
+[architecture overview](https://github.com/blockmandev/Flash/tree/main/contributor-book/src/project-architecture),
 which explains some of our architectural decisions. Refer to our
 [contributing guide](/CONTRIBUTING.md) for more details.
 
